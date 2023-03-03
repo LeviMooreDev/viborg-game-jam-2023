@@ -7,6 +7,7 @@ public class CarVisual : MonoBehaviour
 
     public Transform tz;
     public Transform tx;
+    public float a = .25f;
 
 
     [LabelText("velocity to angle")]
@@ -22,7 +23,7 @@ public class CarVisual : MonoBehaviour
         var target = -zTiltVelocityToAngle.Evaluate(Mathf.Abs(car.SideVelocity)) * (car.SideVelocity > 0 ? -1 : 1);
         z = Mathf.LerpAngle(z, target, Time.deltaTime / zTiltTime);
 
-        float circumference = 2 * Mathf.PI * .5f;
+        float circumference = 2 * Mathf.PI * a;
         float rotationPerSecond = car.Velocity / circumference;
         x += rotationPerSecond;
 
