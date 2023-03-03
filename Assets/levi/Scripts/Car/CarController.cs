@@ -103,6 +103,15 @@ public class CarController : MonoBehaviour
         AvailableAcceleration = acceleration.Evaluate(Mathf.Abs(TargetVelocity));
     }
 
+    public float rampForce = 25;
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "ramp")
+        {
+            motor.velocity = motor.transform.forward * rampForce;
+        }
+    }
+
     private void MotorUpdate()
     {
         //break
