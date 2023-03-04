@@ -12,96 +12,110 @@ public class PlayerController : MonoBehaviour
     public PlayerIndexer indexer;
     public CarInput carInput;
     public LevelEditor levelEditor;
-
     public PlayerInput playerInput;
 
-    void Awake(){
+    void Awake()
+    {
+
         playerInput = GetComponent<PlayerInput>();
         playerIndex = playerInput.playerIndex;
-        Debug.Log("-----");
-       // Debug.Log(playerIndex);
 
         PlayerIndexer[] indexers = FindObjectsOfType<PlayerIndexer>();
 
-       
-        foreach(PlayerIndexer pi in indexers){
-            //Debug.Log(pi.index);
-            if(pi.index == playerIndex){
+
+        foreach (PlayerIndexer pi in indexers)
+        {
+            if (pi.index == playerIndex)
+            {
                 indexer = pi;
                 break;
             }
         }
-        //indexer = indexers.FirstOrDefault(i => i.index == playerIndex);
 
-        Debug.Log(indexer.index);
-
-
-        carInput = indexer.GetComponentInChildren<CarInput>();
-        levelEditor = indexer.GetComponentInChildren<LevelEditor>();
+        carInput = indexer.GetComponentInChildren<CarInput>(true);
+        levelEditor = indexer.GetComponentInChildren<LevelEditor>(true);
     }
 
-    public void OnForwardTrigger (InputValue value){
-       float input = (float)(value.Get()??0f);
-       if(state == 0){
-        carInput.Forward(input);
-       }
-      
-        
+    private void Start()
+    {
+        GameManager.Instance.AddPlayerController(this);
     }
 
-     public void OnBackwardsTrigger (InputValue value){
-       float input = (float)(value.Get()??0f);
-       if(state == 0){
+    public void OnForwardTrigger(InputValue value)
+    {
+        float input = (float)(value.Get() ?? 0f);
+        if (state == 0)
+        {
+            if (carInput != null)
+            {
+                carInput.Forward(input);
+            }
+        }
+
+
+    }
+
+    public void OnBackwardsTrigger(InputValue value)
+    {
+        float input = (float)(value.Get() ?? 0f);
+        if (state == 0)
+        {
             carInput.Backwards(input);
-       }
-        
-       
+        }
+
+
     }
 
-    public void OnJoystick(InputValue value){
+    public void OnJoystick(InputValue value)
+    {
         Vector2 input = value.Get<Vector2>();
-        if(input == null){
+        if (input == null)
+        {
             input = Vector2.zero;
         }
-        if(state == 0){
+        if (state == 0)
+        {
             carInput.Turn(input);
         }
-        else{
+        else
+        {
             levelEditor.MoveInput(input);
         }
-        
+
     }
 
-    public void OnBreak(InputValue value){
-        float input = (float)(value.Get()??0f);
-        if(state == 0){
+    public void OnBreak(InputValue value)
+    {
+        float input = (float)(value.Get() ?? 0f);
+        if (state == 0)
+        {
             carInput.Break(input);
         }
     }
 
 
-    public void OnButtonA(){
-        if(state == 1){
+    public void OnButtonA()
+    {
+        if (state == 1)
+        {
             levelEditor.PlaceInput();
         }
     }
 
-    public void OnDpadNext(){
-        if(state == 1){
+    public void OnDpadNext()
+    {
+        if (state == 1)
+        {
             levelEditor.NextObjectInput();
         }
     }
 
-    public void OnDpadPre(){
-        if(state == 1){
+    public void OnDpadPre()
+    {
+        if (state == 1)
+        {
             levelEditor.PreInput();
         }
-        
+
     }
-
-    public void StateChange(int state){
-        state = 1;
-    }
-
-
 }

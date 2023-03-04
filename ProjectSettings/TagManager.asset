@@ -17,8 +17,8 @@ TagManager:
   - Motor
   - Obstacle
   - Wall
-  - 
-  - 
+  - Player1Only
+  - Player2Only
   - 
   - 
   - 

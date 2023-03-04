@@ -252,4 +252,9 @@ public class CarController : MonoBehaviour
             collider.MoveRotation(transform.rotation);
         }
     }
+
+    public void DestroyMotor()
+    {
+        Destroy(motor.gameObject);
+    }
 }

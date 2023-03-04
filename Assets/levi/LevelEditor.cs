@@ -32,23 +32,57 @@ public class LevelEditor : MonoBehaviour
     public float waitTime;
     private float timeLeftCounter;
 
+    public int objectPlaceCount;
+    private int objectmissingCOunt;
 
+    public int playerIndex;
 
     private Vector2 moveInput = Vector2.zero;
 
     private void Awake()
     {
-        ground.localScale = new Vector3(size.x, 1, size.y);
-
         SelectPrefab(0);
+    }
 
+    public void Enter()
+    {
+        moveInput = Vector2.zero;
         timeLeftCounter = waitTime;
+        objectmissingCOunt = objectPlaceCount;
+        pointer.position = Vector3.zero;
+        Vector3 targetPosition = pointer.position + cameraOffset;
+        builderCamera.position = targetPosition;
     }
 
     private void Update()
     {
         timeLeftCounter -= Time.deltaTime;
-        waitTimeTextmesh.SetText("Get ready to roll in: " + (int)timeLeftCounter + "s");
+
+        string wahtToDoText = "";
+        if (objectmissingCOunt > 0 && timeLeftCounter > 0)
+        {
+            wahtToDoText = "You need to place " + objectmissingCOunt + " more objects and wait for " + (int)timeLeftCounter + "s";
+        }
+        else if (objectmissingCOunt > 0 && timeLeftCounter <= 0)
+        {
+            wahtToDoText = "You need to place " + objectmissingCOunt + " more objects";
+        }
+        else if (objectmissingCOunt <= 0 && timeLeftCounter > 0)
+        {
+            wahtToDoText = "You need to wait " + (int)timeLeftCounter + "s";
+        }
+        else
+        {
+            if (playerIndex == 0)
+            {
+                GameManager.Instance.SetPlayer1State(0);
+            }
+            else
+            {
+                GameManager.Instance.SetPlayer2State(0);
+            }
+        }
+        waitTimeTextmesh.SetText(wahtToDoText);
 
         pointer.position += (new Vector3(-moveInput.y, 0, moveInput.x).normalized) * pointerMoveSpeed * Time.deltaTime;
         pointer.position = new Vector3(
@@ -79,6 +113,11 @@ public class LevelEditor : MonoBehaviour
             Destroy(previewRoot.transform.GetChild(0).gameObject);
         }
         GameObject go = Instantiate(prefabs[index]);
+        go.layer = gameObject.layer;
+        foreach (Transform item in go.GetComponentsInChildren<Transform>())
+        {
+            item.gameObject.layer = gameObject.layer;
+        }
         go.transform.parent = previewRoot.transform;
         go.transform.localPosition = Vector3.zero;
         foreach (var item in go.GetComponentsInChildren<Collider>())
@@ -99,6 +138,12 @@ public class LevelEditor : MonoBehaviour
     }
     public void PlaceInput()
     {
+        if (objectmissingCOunt <= 0)
+        {
+            return;
+        }
+        objectmissingCOunt--;
+
         GameObject go = Instantiate(prefabs[selectedprefab]);
         go.transform.parent = ground;
         go.transform.position = previewRoot.transform.position;
