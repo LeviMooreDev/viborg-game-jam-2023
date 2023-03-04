@@ -7,17 +7,45 @@ public class PlayerController : MonoBehaviour
 {
     public int playerIndex;
 
-    public int state = 0; //0 = roll, 1 = build
+    public int state = 0; //0 = roll, 1 = build, 2 = waiting to roll
 
+    public PlayerIndexer indexer;
     public CarInput carInput;
+    public LevelEditor levelEditor;
 
-    //public Level
+    public PlayerInput playerInput;
+
+    void Awake(){
+        playerInput = GetComponent<PlayerInput>();
+        playerIndex = playerInput.playerIndex;
+        Debug.Log("-----");
+       // Debug.Log(playerIndex);
+
+        PlayerIndexer[] indexers = FindObjectsOfType<PlayerIndexer>();
+
+       
+        foreach(PlayerIndexer pi in indexers){
+            //Debug.Log(pi.index);
+            if(pi.index == playerIndex){
+                indexer = pi;
+                break;
+            }
+        }
+        //indexer = indexers.FirstOrDefault(i => i.index == playerIndex);
+
+        Debug.Log(indexer.index);
+
+
+        carInput = indexer.GetComponent<CarInput>();
+
+    }
 
     public void OnForwardTrigger (InputValue value){
        float input = (float)(value.Get()??0f);
        if(state == 0){
         carInput.Forward(input);
        }
+      
         
     }
 
@@ -38,6 +66,9 @@ public class PlayerController : MonoBehaviour
         if(state == 0){
             carInput.Turn(input);
         }
+        else{
+            levelEditor.MoveInput(input);
+        }
         
     }
 
@@ -50,6 +81,27 @@ public class PlayerController : MonoBehaviour
 
 
     public void OnButtonA(){
-        Debug.Log("Pressed A");
+        if(state == 1){
+            levelEditor.PlaceInput();
+        }
     }
+
+    public void OnDpadNext(){
+        if(state == 1){
+            levelEditor.NextObjectInput();
+        }
+    }
+
+    public void OnDpadPre(){
+        if(state == 1){
+            levelEditor.PreInput();
+        }
+        
+    }
+
+    public void StateChange(int state){
+        state = 1;
+    }
+
+
 }
