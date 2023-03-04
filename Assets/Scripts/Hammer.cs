@@ -19,9 +19,12 @@ public class Hammer : MonoBehaviour
     public float accelSpeed = 0.05f;
 
     bool move = false;
-    bool isMax = false;
+    bool isMax = true;
 
     public float waitTime = 2;
+
+    public ParticleSystem dust1;
+    public ParticleSystem dust2;
 
     void Start()
     {
@@ -51,6 +54,12 @@ public class Hammer : MonoBehaviour
             if(speed > maxSpeed) speed = maxSpeed;
             pivot.rotation = Quaternion.Euler(0,0, Mathf.MoveTowards(pivot.localEulerAngles.z, zVal, speed*Time.deltaTime));
             if((!isMax && pivot.localEulerAngles.z == maxZ) || (isMax && pivot.localEulerAngles.z == minZ)){
+                if(isMax){
+                    dust1.Play();
+                }
+                else{
+                    dust2.Play();
+                }
                 StartCoroutine(WaitNext()); 
             }
         }
