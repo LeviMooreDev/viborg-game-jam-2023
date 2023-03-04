@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hammer : MonoBehaviour
@@ -19,12 +20,9 @@ public class Hammer : MonoBehaviour
     public float accelSpeed = 0.05f;
 
     bool move = false;
-    bool isMax = true;
+    bool isMax = false;
 
     public float waitTime = 2;
-
-    public ParticleSystem dust1;
-    public ParticleSystem dust2;
 
     void Start()
     {
@@ -46,6 +44,18 @@ public class Hammer : MonoBehaviour
         move = false;
     }
 
+    private bool a;
+    private void OnTriggerEnter(Collider other)
+    {
+        a = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        a = false;
+    }
+
+    public bool safe;
+
     void Update()
     {
         if(move){
@@ -54,21 +64,19 @@ public class Hammer : MonoBehaviour
             if(speed > maxSpeed) speed = maxSpeed;
             pivot.rotation = Quaternion.Euler(0,0, Mathf.MoveTowards(pivot.localEulerAngles.z, zVal, speed*Time.deltaTime));
             if((!isMax && pivot.localEulerAngles.z == maxZ) || (isMax && pivot.localEulerAngles.z == minZ)){
-                if(isMax){
-                    dust1.Play();
-                }
-                else{
-                    dust2.Play();
-                }
                 StartCoroutine(WaitNext()); 
             }
         }
     }
 
-    IEnumerator WaitNext(){
+    IEnumerator WaitNext()
+    {
+        safe = true;
         Stop();
         yield return new WaitForSeconds(waitTime);
         isMax = !isMax;
         Play();
+        yield return new WaitForSeconds(.5f);
+        safe = false;
     }
 }

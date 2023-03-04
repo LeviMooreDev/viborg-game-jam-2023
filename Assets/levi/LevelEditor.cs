@@ -39,6 +39,11 @@ public class LevelEditor : MonoBehaviour
 
     private Vector2 moveInput = Vector2.zero;
 
+    public float safeEndSize;
+
+    public PlayerCheckCollider checkCollider;
+
+
     private void Awake()
     {
         SelectPrefab(0);
@@ -84,11 +89,19 @@ public class LevelEditor : MonoBehaviour
         }
         waitTimeTextmesh.SetText(wahtToDoText);
 
-        pointer.position += (new Vector3(-moveInput.y, 0, moveInput.x).normalized) * pointerMoveSpeed * Time.deltaTime;
+        var inputX = moveInput.x;
+        var inputY = moveInput.y;
+        if (playerIndex == 1)
+        {
+            inputX = -inputX;
+            inputY = -inputY;
+        }
+
+        pointer.position += (new Vector3(inputX, 0, inputY).normalized) * pointerMoveSpeed * Time.deltaTime;
         pointer.position = new Vector3(
             Mathf.Clamp(pointer.position.x, -size.x / 2, size.x / 2),
             pointer.position.y,
-            Mathf.Clamp(pointer.position.z, -size.y / 2, size.y / 2)
+            Mathf.Clamp(pointer.position.z, -(size.y - safeEndSize) / 2, (size.y - safeEndSize) / 2)
         );
 
         Vector3 targetPosition = pointer.position + cameraOffset;
@@ -138,6 +151,11 @@ public class LevelEditor : MonoBehaviour
     }
     public void PlaceInput()
     {
+        if (checkCollider.on)
+        {
+            return;
+        }
+
         if (objectmissingCOunt <= 0)
         {
             return;

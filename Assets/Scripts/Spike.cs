@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class Spike : MonoBehaviour
     public float upY;
     public float downY;
 
-    bool isUp = true;
+    public bool isUp = true;
     bool move = false;
 
    
@@ -54,5 +55,10 @@ public class Spike : MonoBehaviour
         
         isUp = !isUp;
         Play();
+    }
+
+    internal bool canKill()
+    {
+        return spikeParent.localPosition.y > -0.25f;
     }
 }

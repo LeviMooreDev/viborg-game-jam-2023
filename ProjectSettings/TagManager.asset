@@ -5,8 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - ramp
+  - win1
+  - win2
   - ExplosiveBarrel
   - BouncePad
+  - player
+  - hammer
+  - CarController
+  - Spikes
   layers:
   - Default
   - TransparentFX
@@ -23,9 +29,7 @@ TagManager:
   - 
   - Player1Only
   - Player2Only
-  - 
-  - 
-  - 
+  - FillerOnly
   - 
   - 
   - 
