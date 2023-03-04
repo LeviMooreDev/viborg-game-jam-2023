@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Hammer : MonoBehaviour
 {
-
     public Transform pivot;
 
     public float minZ = 0f;  
@@ -23,6 +22,9 @@ public class Hammer : MonoBehaviour
     bool isMax = false;
 
     public float waitTime = 2;
+
+    public ParticleSystem dust1;
+    public ParticleSystem dust2;
 
     void Start()
     {
@@ -44,16 +46,6 @@ public class Hammer : MonoBehaviour
         move = false;
     }
 
-    private bool a;
-    private void OnTriggerEnter(Collider other)
-    {
-        a = true;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        a = false;
-    }
-
     public bool safe;
 
     void Update()
@@ -64,7 +56,15 @@ public class Hammer : MonoBehaviour
             if(speed > maxSpeed) speed = maxSpeed;
             pivot.rotation = Quaternion.Euler(0,0, Mathf.MoveTowards(pivot.localEulerAngles.z, zVal, speed*Time.deltaTime));
             if((!isMax && pivot.localEulerAngles.z == maxZ) || (isMax && pivot.localEulerAngles.z == minZ)){
-                StartCoroutine(WaitNext()); 
+                StartCoroutine(WaitNext());
+                if (isMax)
+                {
+                    dust1.Play();
+                }
+                else
+                {
+                    dust2.Play();
+                }
             }
         }
     }

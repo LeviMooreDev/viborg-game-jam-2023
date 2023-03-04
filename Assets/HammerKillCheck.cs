@@ -10,7 +10,7 @@ public class HammerKillCheck : MonoBehaviour
     {
         if (other.tag == "hammer")
         {
-            if (other.GetComponentInParent<Hammer>().safe)
+            if (!other.GetComponentInParent<Hammer>().safe)
             {
                 carController.Kill();
             }
