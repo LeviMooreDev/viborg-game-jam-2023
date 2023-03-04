@@ -1,3 +1,5 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -64,6 +66,8 @@ public class CarController : MonoBehaviour
     private bool isCarGrounded;
     private RaycastHit groundHit;
 
+    public TextMeshProUGUI statusTextMesh;
+
     private void Start()
     {
         QualitySettings.vSyncCount = 0;
@@ -80,6 +84,28 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
+        string statusText = "";
+        int yourScore = GameManager.Instance.player1Score;
+        int otherScore = GameManager.Instance.player2Score;
+        if (playerIndex == 1)
+        {
+            otherScore= GameManager.Instance.player2Score;
+            yourScore = GameManager.Instance.player1Score;
+        }
+        if (yourScore > otherScore)
+        {
+            statusText = "You are " + (yourScore - otherScore) + " deliveries ahead";
+        }
+        if (yourScore < otherScore)
+        {
+            statusText = "You are " + (otherScore - yourScore) + " deliveries behind";
+        }
+        if (yourScore == otherScore && yourScore != 0)
+        {
+            statusText = "You are equal in deliveries";
+        }
+        statusTextMesh.SetText(statusText);
+
         UpdateValues();
         Quaternion toRotateTo = Quaternion.FromToRotation(transform.up, groundHit.normal) * transform.rotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, toRotateTo, alignToGroundTime * Time.deltaTime);
@@ -110,10 +136,20 @@ public class CarController : MonoBehaviour
     {
         if (other.tag == "ramp")
         {
-            motor.velocity = motor.transform.forward * rampForce;
+            //motor.velocity = motor.transform.forward * rampForce;
+        }
+
+
+        if (other.tag == "Spikes")
+        {
+            if (!other.GetComponentInParent<Spike>().canKill())
+            {
+                Kill();
+            }
         }
     }
 
+    public float b = 50;
     private void OnTriggerEnter(Collider other)
     {
         if (playerIndex == 0 && other.tag == "win2")
@@ -125,6 +161,16 @@ public class CarController : MonoBehaviour
         {
             GameManager.Instance.GivePointPlayer2();
             GameManager.Instance.SetPlayer2State(1);
+        }
+
+        if (other.tag == "BouncePad")
+        {
+            other.GetComponent<BouncePad>().Spring();
+            motor.velocity = new Vector3(motor.velocity.x, motor.velocity.y + b, motor.velocity.z);
+        }
+        if (other.tag == "ExplosiveBarrel")
+        {
+            other.GetComponent<ExplosiveBarrel>().Explode();
         }
     }
 
@@ -272,6 +318,7 @@ public class CarController : MonoBehaviour
     public void DestroyMotor()
     {
         Destroy(motor.gameObject);
+        Destroy(collider.gameObject);
     }
 
     public void Kill()

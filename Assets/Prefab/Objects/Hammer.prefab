@@ -1025,7 +1025,7 @@ Transform:
   m_GameObject: {fileID: 5296946951659066553}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5296946952181284338}
@@ -1053,6 +1053,9 @@ MonoBehaviour:
   speed: 25
   accelSpeed: 3
   waitTime: 2
+  isMaxPointCheck: {fileID: 5296946952091461321}
+  notMaxPointCheck: {fileID: 5296946952896393014}
+  killDistance: 0.38
 --- !u!1 &5296946952091461321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1072,7 @@ GameObject:
   - component: {fileID: 5296946952091461327}
   m_Layer: 9
   m_Name: Collider (1)
-  m_TagString: Untagged
+  m_TagString: hammer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1082,8 +1085,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5296946952091461321}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.637, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalPosition: {x: -0, y: 0.694, z: 0}
+  m_LocalScale: {x: 1, y: 0.086742006, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5296946952321669174}
@@ -7417,7 +7420,7 @@ GameObject:
   - component: {fileID: 5296946952896393012}
   m_Layer: 9
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: hammer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7430,8 +7433,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5296946952896393014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.000000078789895, y: -0.050000012, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.094, z: 0}
+  m_LocalScale: {x: 1, y: 0.086742006, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5296946952321669174}

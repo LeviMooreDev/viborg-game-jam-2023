@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hammer : MonoBehaviour
@@ -43,6 +44,18 @@ public class Hammer : MonoBehaviour
         move = false;
     }
 
+    private bool a;
+    private void OnTriggerEnter(Collider other)
+    {
+        a = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        a = false;
+    }
+
+    public bool safe;
+
     void Update()
     {
         if(move){
@@ -56,10 +69,14 @@ public class Hammer : MonoBehaviour
         }
     }
 
-    IEnumerator WaitNext(){
+    IEnumerator WaitNext()
+    {
+        safe = true;
         Stop();
         yield return new WaitForSeconds(waitTime);
         isMax = !isMax;
         Play();
+        yield return new WaitForSeconds(.5f);
+        safe = false;
     }
 }

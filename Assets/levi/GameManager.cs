@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     public GameObject backwallPlayer1;
     public GameObject backwallPlayer2;
 
+    public int player1Score;
+    public int player2Score;
+
     private void Awake()
     {
         Instance = this;
@@ -97,7 +100,10 @@ public class GameManager : MonoBehaviour
         {
             player1Build.GetComponent<LevelEditor>().Enter();
             player1Build.SetActive(true);
-            player1Roll.GetComponentInChildren<CarController>().DestroyMotor();
+            if (player1Roll != null)
+            {
+                player1Roll.GetComponentInChildren<CarController>().DestroyMotor();
+            }
             Destroy(player1Roll);
         }
     }
@@ -124,18 +130,21 @@ public class GameManager : MonoBehaviour
         {
             player2Build.GetComponent<LevelEditor>().Enter();
             player2Build.SetActive(true);
-            player2Roll.GetComponentInChildren<CarController>().DestroyMotor();
+            if (player2Roll != null)
+            {
+                player2Roll.GetComponentInChildren<CarController>().DestroyMotor();
+            }
             Destroy(player2Roll);
         }
     }
 
     public void GivePointPlayer1()
     {
-        //give player 1 points
+        player1Score++;
     }
     public void GivePointPlayer2()
     {
-        //give player 2 points
+        player2Score++;
     }
 
     IEnumerator Test(System.Action action)

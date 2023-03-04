@@ -39,6 +39,7 @@ public class ExplosiveBarrel : MonoBehaviour
         Debug.Log(hitColliders.Length);
         foreach (var hitCollider in hitColliders)
         {
+            hitCollider.GetComponent<CarController>().Kill();
             //hitCollider.kill? End the barrels life >:D
         }
 
