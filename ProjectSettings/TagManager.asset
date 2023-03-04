@@ -21,6 +21,8 @@ TagManager:
   - Wall
   - Player
   - 
+  - Player1Only
+  - Player2Only
   - 
   - 
   - 
