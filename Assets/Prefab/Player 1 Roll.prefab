@@ -366,6 +366,10 @@ MonoBehaviour:
   statusTetxtMehs: {fileID: 6538150176351968533}
   rampForce: 25
   b: 25
+  dead: 0
+  deadPrefab: {fileID: 8879523685073530585, guid: 9f0ee22ed5f37ba4aaf3c768b8dc872c,
+    type: 3}
+  onDeadHide: {fileID: 4062375408951745220}
 --- !u!114 &6702876510897208351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5460,7 +5464,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4087
+    m_Bits: 200695
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

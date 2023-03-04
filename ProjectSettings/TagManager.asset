@@ -30,8 +30,8 @@ TagManager:
   - Player1Only
   - Player2Only
   - FillerOnly
-  - 
-  - 
+  - HideForPlayer1
+  - HideForPlayer2
   - 
   - 
   - 

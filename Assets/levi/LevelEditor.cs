@@ -29,10 +29,10 @@ public class LevelEditor : MonoBehaviour
     public GameObject previewRoot;
 
     public TextMeshProUGUI waitTimeTextmesh;
-    public float waitTime;
+    private float waitTime;
     private float timeLeftCounter;
 
-    public int objectPlaceCount;
+    private int objectPlaceCount = 0;
     private int objectmissingCOunt;
 
     public int playerIndex;
@@ -54,6 +54,8 @@ public class LevelEditor : MonoBehaviour
     {
         moveInput = Vector2.zero;
         timeLeftCounter = waitTime;
+        objectPlaceCount++;
+        objectPlaceCount = Mathf.Min(5, objectPlaceCount);
         objectmissingCOunt = objectPlaceCount;
         pointer.position = Vector3.zero;
         Vector3 targetPosition = pointer.position + cameraOffset;

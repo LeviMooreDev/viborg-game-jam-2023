@@ -35,10 +35,22 @@ public class BarrelDebris : MonoBehaviour
 
             dust.Play();
         }
+
+        StartCoroutine(NOCLiider());
     }
 
     IEnumerator WaitTime(){
         yield return new WaitForSeconds(2);
         Explode(Vector3.zero);
+    }
+
+    IEnumerator NOCLiider()
+    {
+        yield return new WaitForSeconds(5);
+        foreach (Rigidbody rb in rbs)
+        {
+            Destroy(rb.gameObject.GetComponent<MeshCollider>());
+            Destroy(rb);
+        }
     }
 }

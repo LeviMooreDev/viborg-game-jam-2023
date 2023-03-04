@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -89,6 +90,11 @@ public class CarController : MonoBehaviour
         statusText += "\nTime Left: " + (int)GameManager.Instance.gameTimeCountdown + "s";
         statusTetxtMehs.SetText(statusText);
 
+        if (dead)
+        {
+            return;
+        }
+
         UpdateValues();
         Quaternion toRotateTo = Quaternion.FromToRotation(transform.up, groundHit.normal) * transform.rotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, toRotateTo, alignToGroundTime * Time.deltaTime);
@@ -117,6 +123,11 @@ public class CarController : MonoBehaviour
     public float rampForce = 25;
     private void OnTriggerStay(Collider other)
     {
+        if (dead)
+        {
+            return;
+        }
+
         if (other.tag == "ramp")
         {
             //motor.velocity = motor.transform.forward * rampForce;
@@ -135,6 +146,11 @@ public class CarController : MonoBehaviour
     public float b = 50;
     private void OnTriggerEnter(Collider other)
     {
+        if (dead)
+        {
+            return;
+        }
+
         if (playerIndex == 0 && other.tag == "win2")
         {
             GameManager.Instance.GivePointPlayer1();
@@ -272,6 +288,10 @@ public class CarController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (dead)
+        {
+            return;
+        }
         if (isCarGrounded)
         {
             Vector3 speed = motor.transform.forward * TargetVelocity;
@@ -304,13 +324,32 @@ public class CarController : MonoBehaviour
         Destroy(collider.gameObject);
     }
 
+    public bool dead;
+    public GameObject deadPrefab;
+    public GameObject onDeadHide;
     public void Kill()
     {
+        if (dead)
+        {
+            return;
+        }
+
+        dead = true;
+        onDeadHide.SetActive(false);
+        GameObject go = Instantiate(deadPrefab, onDeadHide.transform.position, onDeadHide.transform.rotation, null);
+        go.GetComponent<BarrelDebris>().Explode(motor.velocity);
+        motor.isKinematic = true;
+        StartCoroutine(IEKill());
+    }
+    public IEnumerator IEKill()
+    {
+        yield return new WaitForSeconds(1);
+
         if (playerIndex == 0)
         {
             GameManager.Instance.SetPlayer1State(1);
         }
-        if(playerIndex == 1)
+        if (playerIndex == 1)
         {
             GameManager.Instance.SetPlayer2State(1);
         }
