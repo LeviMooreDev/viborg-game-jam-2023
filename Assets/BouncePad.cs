@@ -38,7 +38,7 @@ public class BouncePad : MonoBehaviour
 
         if(move){
             Vector3 targetPos = goUp ? upPos : downPos;
-            top.transform.position = Vector3.MoveTowards(top.transform.position, targetPos, (movePercentage * (upPos.y - downPos.y)) * Time.deltaTime);
+            top.transform.localPosition = Vector3.MoveTowards(top.transform.localPosition, targetPos, (movePercentage * (upPos.y - downPos.y)) * Time.deltaTime);
 
             Vector3 targetScale = goUp ? upScale : downScale;
             springPivot.localScale = Vector3.MoveTowards(springPivot.localScale, targetScale, (movePercentage * (upScale.y - downScale.y)) * Time.deltaTime);
@@ -56,7 +56,7 @@ public class BouncePad : MonoBehaviour
 
     void Reset(){
         springPivot.localScale = downScale;
-        top.transform.position = downPos;
+        top.transform.localPosition = downPos;
     }
 
     public void Spring(){
