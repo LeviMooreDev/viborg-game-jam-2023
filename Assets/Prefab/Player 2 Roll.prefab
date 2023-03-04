@@ -247,6 +247,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckLength: 2
   alignToGroundTime: 20
+  playerIndex: 1
   rampForce: 25
 --- !u!114 &6702876510897208351
 MonoBehaviour:

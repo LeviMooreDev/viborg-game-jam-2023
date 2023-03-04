@@ -46,6 +46,8 @@ public class CarController : MonoBehaviour
     public float groundCheckLength = 2f;
     public float alignToGroundTime = 20;
 
+    public int playerIndex;
+
     //gear
     public int Gear { get; private set; }
 
@@ -109,6 +111,20 @@ public class CarController : MonoBehaviour
         if (other.tag == "ramp")
         {
             motor.velocity = motor.transform.forward * rampForce;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (playerIndex == 0 && other.tag == "win2")
+        {
+            GameManager.Instance.GivePointPlayer1();
+            GameManager.Instance.SetPlayer1State(1);
+        }
+        if (playerIndex == 1 && other.tag == "win1")
+        {
+            GameManager.Instance.GivePointPlayer2();
+            GameManager.Instance.SetPlayer2State(1);
         }
     }
 
@@ -256,5 +272,17 @@ public class CarController : MonoBehaviour
     public void DestroyMotor()
     {
         Destroy(motor.gameObject);
+    }
+
+    public void Kill()
+    {
+        if (playerIndex == 0)
+        {
+            GameManager.Instance.SetPlayer1State(1);
+        }
+        if(playerIndex == 1)
+        {
+            GameManager.Instance.SetPlayer2State(1);
+        }
     }
 }

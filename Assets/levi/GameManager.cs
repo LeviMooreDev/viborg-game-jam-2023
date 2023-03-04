@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject wallCol1;
     public GameObject wallCol2;
+    public GameObject backwallPlayer1;
+    public GameObject backwallPlayer2;
 
     private void Awake()
     {
@@ -35,6 +38,9 @@ public class GameManager : MonoBehaviour
 
         wallCol1.transform.position = new Vector3(-levelEditor.size.x / 2 - .5f, 0, 0);
         wallCol2.transform.position = new Vector3(levelEditor.size.x / 2 + .5f, 0, 0);
+
+        backwallPlayer1.transform.position = new Vector3(0, 0, -levelEditor.size.y / 2 - .5f);
+        backwallPlayer2.transform.position = new Vector3(0, 0, levelEditor.size.y / 2 + .5f);
     }
 
     public void AddPlayerController(PlayerController asd)
@@ -118,9 +124,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GivePointPlayer1()
+    {
+        //give player 1 points
+    }
+    public void GivePointPlayer2()
+    {
+        //give player 2 points
+    }
+
     IEnumerator Test(System.Action action)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(15);
         action();
     }
 }
