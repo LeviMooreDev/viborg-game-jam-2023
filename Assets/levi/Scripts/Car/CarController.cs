@@ -66,7 +66,7 @@ public class CarController : MonoBehaviour
     private bool isCarGrounded;
     private RaycastHit groundHit;
 
-    public TextMeshProUGUI statusTextMesh;
+    public TextMeshProUGUI statusTetxtMehs;
 
     private void Start()
     {
@@ -85,26 +85,9 @@ public class CarController : MonoBehaviour
     private void Update()
     {
         string statusText = "";
-        int yourScore = GameManager.Instance.player1Score;
-        int otherScore = GameManager.Instance.player2Score;
-        if (playerIndex == 1)
-        {
-            otherScore= GameManager.Instance.player2Score;
-            yourScore = GameManager.Instance.player1Score;
-        }
-        if (yourScore > otherScore)
-        {
-            statusText = "You are " + (yourScore - otherScore) + " deliveries ahead";
-        }
-        if (yourScore < otherScore)
-        {
-            statusText = "You are " + (otherScore - yourScore) + " deliveries behind";
-        }
-        if (yourScore == otherScore && yourScore != 0)
-        {
-            statusText = "You are equal in deliveries";
-        }
-        statusTextMesh.SetText(statusText);
+        statusText += "Deliveries Made: " + (playerIndex == 0 ? GameManager.Instance.player1Score : GameManager.Instance.player2Score);
+        statusText += "\nTime Left: " + (int)GameManager.Instance.gameTimeCountdown + "s";
+        statusTetxtMehs.SetText(statusText);
 
         UpdateValues();
         Quaternion toRotateTo = Quaternion.FromToRotation(transform.up, groundHit.normal) * transform.rotation;

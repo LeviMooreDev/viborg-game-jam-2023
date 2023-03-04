@@ -43,6 +43,7 @@ public class LevelEditor : MonoBehaviour
 
     public PlayerCheckCollider checkCollider;
 
+    public TextMeshProUGUI statusTetxtMehs;
 
     private void Awake()
     {
@@ -61,6 +62,11 @@ public class LevelEditor : MonoBehaviour
 
     private void Update()
     {
+        string statusText = "";
+        statusText += "Deliveries Made: " + (playerIndex == 0 ? GameManager.Instance.player1Score : GameManager.Instance.player2Score);
+        statusText += "\nTime Left: " + (int)GameManager.Instance.gameTimeCountdown + "s";
+        statusTetxtMehs.SetText(statusText);
+
         timeLeftCounter -= Time.deltaTime;
 
         string wahtToDoText = "";
@@ -142,7 +148,14 @@ public class LevelEditor : MonoBehaviour
         {
             item.color = Color.white;
         }
-        prefabImages[selectedprefab].color = new Color(0.31f, 1, 1);
+        if (playerIndex == 0)
+        {
+            prefabImages[selectedprefab].color = Color.blue;
+        }
+        if (playerIndex == 1)
+        {
+            prefabImages[selectedprefab].color = Color.red;
+        }
     }
 
     public void MoveInput(Vector2 dir)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public int playerIndex;
 
-    public int state = 0; //0 = roll, 1 = build, 2 = waiting to roll
+    private int state = -1; //0 = roll, 1 = build, 2 = waiting to roll
 
     public PlayerIndexer indexer;
     public CarInput carInput;
@@ -117,5 +118,10 @@ public class PlayerController : MonoBehaviour
             levelEditor.PreInput();
         }
 
+    }
+
+    internal void SetState(int state)
+    {
+        this.state = state;
     }
 }
