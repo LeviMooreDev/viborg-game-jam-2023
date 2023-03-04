@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour
         Debug.Log(indexer.index);
 
 
-        carInput = indexer.GetComponent<CarInput>();
-
+        carInput = indexer.GetComponentInChildren<CarInput>();
+        levelEditor = indexer.GetComponentInChildren<LevelEditor>();
     }
 
     public void OnForwardTrigger (InputValue value){
