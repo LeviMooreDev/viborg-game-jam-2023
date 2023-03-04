@@ -24,7 +24,7 @@ public class Spike : MonoBehaviour
     }
 
     public void Setup(){
-        spikeParent.position = new Vector3(0, downY, 0);
+        spikeParent.localPosition = new Vector3(0, downY, 0);
          StartCoroutine(WaitNext()); 
     }
 
@@ -40,8 +40,8 @@ public class Spike : MonoBehaviour
     {
         if(move){
             float yVal = isUp ? downY : upY;
-            spikeParent.position = new Vector3(0, Mathf.MoveTowards(spikeParent.position.y, yVal, moveSpeed*Time.deltaTime),0);;
-            if((!isUp && spikeParent.position.y == upY) || (isUp && spikeParent.position.y == downY)){
+            spikeParent.localPosition = new Vector3(0, Mathf.MoveTowards(spikeParent.localPosition.y, yVal, moveSpeed*Time.deltaTime),0);;
+            if((!isUp && spikeParent.localPosition.y == upY) || (isUp && spikeParent.localPosition.y == downY)){
                 StartCoroutine(WaitNext()); 
             }
         }
