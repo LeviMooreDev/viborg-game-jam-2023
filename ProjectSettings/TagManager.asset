@@ -9,6 +9,7 @@ TagManager:
   - win2
   - ExplosiveBarrel
   - BouncePad
+  - player
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,6 @@ TagManager:
   - 
   - Player1Only
   - Player2Only
-  - 
-  - 
   - 
   - 
   - 

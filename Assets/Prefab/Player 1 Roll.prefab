@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6702876510105374790}
   m_Layer: 8
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,6 +247,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckLength: 2
   alignToGroundTime: 20
+  playerIndex: 0
   rampForce: 25
 --- !u!114 &6702876510897208351
 MonoBehaviour:

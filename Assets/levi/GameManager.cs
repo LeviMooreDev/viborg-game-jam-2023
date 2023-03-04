@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,29 +45,32 @@ public class GameManager : MonoBehaviour
         backwallPlayer2.transform.position = new Vector3(0, 0, levelEditor.size.y / 2 + .5f);
     }
 
+    public static bool resetKeyDown;
+    private void Update()
+    {
+        if (Keyboard.current.rKey.isPressed)
+        {
+            if (!resetKeyDown)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            resetKeyDown = true;
+        }
+        else
+        {
+            resetKeyDown = false;
+        }
+    }
+
     public void AddPlayerController(PlayerController asd)
     {
         playerControllers.Add(asd.playerIndex, asd);
         if (asd.playerIndex == 0)
         {
-            SetPlayer1State(0);
-            SetPlayer1State(1);
-            if (player1State != 0)
-            {
-                SetPlayer1State(0);
-            }
-
             SetPlayer1State(player1State);
         }
         if (asd.playerIndex == 1)
         {
-            SetPlayer2State(0);
-            SetPlayer2State(1);
-            if (player2State != 0)
-            {
-                SetPlayer2State(0);
-            }
-
             SetPlayer2State(player2State);
         }
     }
@@ -80,7 +85,7 @@ public class GameManager : MonoBehaviour
 
             player1Roll = Instantiate(player1RollPrefab);
             player1Roll.transform.parent = player1Root.transform;
-            player1Roll.transform.position = new Vector3(0, 1, -levelEditor.size.y / 2 + 5);
+            player1Roll.transform.position = new Vector3(0, 1, -levelEditor.size.y / 2 + 2);
             playerControllers[0].carInput = player1Roll.GetComponentInChildren<CarInput>();
 
             StartCoroutine(Test(() =>
@@ -106,7 +111,7 @@ public class GameManager : MonoBehaviour
 
             player2Roll = Instantiate(player2RollPrefab);
             player2Roll.transform.parent = player2Root.transform;
-            player2Roll.transform.position = new Vector3(0, 1, levelEditor.size.y / 2 - 5);
+            player2Roll.transform.position = new Vector3(0, 1, levelEditor.size.y / 2 - 2);
             player2Roll.transform.eulerAngles = new Vector3(0, 180, 0);
             playerControllers[1].carInput = player2Roll.GetComponentInChildren<CarInput>();
 
@@ -135,7 +140,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Test(System.Action action)
     {
-        yield return new WaitForSeconds(15);
-        action();
+        yield return new WaitForSeconds(3);
+        //action();
     }
 }
