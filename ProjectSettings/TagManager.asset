@@ -7,6 +7,8 @@ TagManager:
   - ramp
   - win1
   - win2
+  - ExplosiveBarrel
+  - BouncePad
   layers:
   - Default
   - TransparentFX
@@ -19,6 +21,8 @@ TagManager:
   - Motor
   - Obstacle
   - Wall
+  - Player
+  - 
   - Player1Only
   - Player2Only
   - 
