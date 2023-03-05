@@ -54,6 +54,53 @@ public class Spike : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         
         isUp = !isUp;
+        bool playAudio = false;
+        float v = 0;
+        foreach (var item in GameObject.FindGameObjectsWithTag("CarController"))
+        {
+            float d = Vector3.Distance(item.transform.position, transform.position);
+            if (d < 20)
+            {
+                playAudio = true;
+                v = .4f;
+            }
+            else if (d < 18)
+            {
+                playAudio = true;
+                v = .6f;
+            }
+            else if (d < 15)
+            {
+                playAudio = true;
+                v = .7f;
+            }
+            else if (d < 13)
+            {
+                playAudio = true;
+                v = .8f;
+            }
+            else if (d < 11)
+            {
+                playAudio = true;
+                v = .9f;
+            }
+            else if (d < 9)
+            {
+                playAudio = true;
+                v = 1;
+            }
+        }
+        if (playAudio)
+        {
+            if (isUp)
+            {
+                AudioManager.I.Play(AudioManager.A.Spikes_up, v);
+            }
+            else
+            {
+                AudioManager.I.Play(AudioManager.A.Spikes_down, v);
+            }
+        }
         Play();
     }
 

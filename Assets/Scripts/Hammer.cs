@@ -57,6 +57,48 @@ public class Hammer : MonoBehaviour
             pivot.rotation = Quaternion.Euler(0,0, Mathf.MoveTowards(pivot.localEulerAngles.z, zVal, speed*Time.deltaTime));
             if((!isMax && pivot.localEulerAngles.z == maxZ) || (isMax && pivot.localEulerAngles.z == minZ)){
                 StartCoroutine(WaitNext());
+
+                bool playAudio = false;
+                float v = 0;
+                foreach (var item in GameObject.FindGameObjectsWithTag("CarController"))
+                {
+                    float d = Vector3.Distance(item.transform.position, transform.position);
+                    if (d < 20)
+                    {
+                        playAudio = true;
+                        v = .4f;
+                    }
+                    else if (d < 18)
+                    {
+                        playAudio = true;
+                        v = .6f;
+                    }
+                    else if (d < 15)
+                    {
+                        playAudio = true;
+                        v = .7f;
+                    }
+                    else if (d < 13)
+                    {
+                        playAudio = true;
+                        v = .8f;
+                    }
+                    else if (d < 11)
+                    {
+                        playAudio = true;
+                        v = .9f;
+                    }
+                    else if (d < 9)
+                    {
+                        playAudio = true;
+                        v = 1;
+                    }
+                }
+                if (playAudio)
+                {
+                    AudioManager.I.Play(AudioManager.A.slam1, v);
+                }
+
                 if (isMax)
                 {
                     dust1.Play();

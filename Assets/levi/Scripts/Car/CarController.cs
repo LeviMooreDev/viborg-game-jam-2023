@@ -136,7 +136,7 @@ public class CarController : MonoBehaviour
 
         if (other.tag == "Spikes")
         {
-            if (!other.GetComponentInParent<Spike>().canKill())
+            if (other.GetComponentInParent<Spike>().canKill())
             {
                 Kill();
             }
@@ -155,21 +155,20 @@ public class CarController : MonoBehaviour
         {
             GameManager.Instance.GivePointPlayer1();
             GameManager.Instance.SetPlayer1State(1);
+            AudioManager.I.Play(AudioManager.A.d);
         }
         if (playerIndex == 1 && other.tag == "win1")
         {
             GameManager.Instance.GivePointPlayer2();
             GameManager.Instance.SetPlayer2State(1);
+            AudioManager.I.Play(AudioManager.A.d);
         }
 
         if (other.tag == "BouncePad")
         {
             other.GetComponent<BouncePad>().Spring();
             motor.velocity = new Vector3(motor.velocity.x, motor.velocity.y + b, motor.velocity.z);
-        }
-        if (other.tag == "ExplosiveBarrel")
-        {
-            other.GetComponent<ExplosiveBarrel>().Explode();
+            AudioManager.I.Play(AudioManager.A.boing);
         }
     }
 
@@ -332,6 +331,15 @@ public class CarController : MonoBehaviour
         if (dead)
         {
             return;
+        }
+
+        if (Random.value > .5f)
+        {
+            AudioManager.I.Play(AudioManager.A.barrel_break);
+        }
+        else
+        {
+            AudioManager.I.Play(AudioManager.A.barrel_break2);
         }
 
         dead = true;
